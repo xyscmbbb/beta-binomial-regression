@@ -129,7 +129,7 @@ def fit_beta_binom(cell_counts, bg_alphas=None, bg_betas=None, num_bg=0, maxiter
         alphas = alpha_old * (numerator_a / denominator).clip(1 / 2, 2)
         betas = beta_old * (numerator_b / denominator).clip(1 / 2, 2)
 
-        print("   ", abs(numerator_a / denominator).max().numpy(), abs(numerator_b / denominator).max().numpy())
+        #print("   ", abs(numerator_a / denominator).max().numpy(), abs(numerator_b / denominator).max().numpy())
 
 
     return alphas, betas, initial_betas
