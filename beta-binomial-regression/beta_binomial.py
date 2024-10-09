@@ -197,7 +197,7 @@ def generate_features_generic(counts, delete_names=None, column='feature_call', 
 
     features = torch.tensor(feature_df.values).double()
 
-    return uni_feature_names, features
+    return uni_feature_names, features, feature_df
 
 
 def sgd_optimizer(cell_counts, a_NC, b_NC, maxiter=100, priorval=.075,
