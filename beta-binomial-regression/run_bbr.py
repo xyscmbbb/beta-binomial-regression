@@ -44,26 +44,21 @@ def make_bbr_df(
 
 
 def get_pvalues_df(second_deriv, w, features_order, genes, cc=True):
-    # Calculate the standard error (sigma)
     sigma = np.sqrt(1 / second_deriv)
-    
-    # Calculate the z-scores
     zscore = w / sigma
-    
-    # Calculate the p-values (two-tailed)
     pvalues = norm.sf(abs(zscore)) * 2
-    
-    # Create a DataFrame to store p-values and sigma
     pvalues_df = pd.DataFrame(
-        {
-            'pvalue': pvalues.T,
-            'sigma': sigma.T
-        },
+        pvalues.T,
         columns=np.hstack((features_order, ["S_score", "G2M_score"])) if cc else features_order,
-        index=genes
+        index=genes,
+    )
+    se_df = pd.DataFrame(
+        sigma.T,
+        columns=np.hstack((features_order, ["S_score", "G2M_score"])) if cc else features_order,
+        index=genes,
     )
 
-    return pvalues_df
+    return pvalues_df, se_df
 
 
 def run_whole_bbr(
