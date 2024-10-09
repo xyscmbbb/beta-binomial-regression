@@ -49,6 +49,7 @@ def get_pvalues_df(second_deriv, w, features_order, genes, cc=True):
     pvalues = norm.sf(abs(zscore)) * 2
     pvalues_df = pd.DataFrame(
         pvalues.T,
+        sigma.T,
         columns=np.hstack((features_order, ["S_score", "G2M_score"])) if cc else features_order,
         index=genes,
     )
