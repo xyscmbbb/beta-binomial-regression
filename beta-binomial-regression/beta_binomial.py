@@ -369,7 +369,7 @@ def sgd_optimizer(cell_counts, a_NC, b_NC, maxiter=100, priorval=.075,
     delta_s.requires_grad = True
     intercept.requires_grad = True
 
-    print(w)
+    #print(w)
 
     # Use an SGD optimizer
 
