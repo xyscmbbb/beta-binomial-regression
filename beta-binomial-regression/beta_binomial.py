@@ -389,7 +389,7 @@ def sgd_optimizer(cell_counts, a_NC, b_NC, maxiter=100, priorval=.075,
         prior_w = priorw(w, priorval)
         ll = betabinomial_logprob(counts, new_mean * new_s, (1 - new_mean) * new_s, totals)
         loss = - (ll.sum() + prior_w.sum())
-        print(loss, abs(w).max(), abs(delta_s).max())
+        #print(loss, abs(w).max(), abs(delta_s).max())
 
         # get rid of retain_graph ?
         loss.backward(retain_graph=True)
