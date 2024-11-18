@@ -227,3 +227,43 @@ def run_whole_bbr(
     bbr_df = make_bbr_df(weights, counts, features_order, cc=cc)
 
     return bbr_df, pvalues_df, loss_plt
+
+
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import matplotlib.cm as cm
+import numpy as np
+
+def bbr_heatmap(bbr_df_d12,TF,d1,d2,vmax=50):
+    data_norm = mcolors.Normalize(vmin=0, vmax=vmax)
+    cmap = plt.get_cmap('plasma')
+    fig, ax = plt.subplots()
+
+    # Create color array based on 'mean_TPM_d2'
+    tpm_values = bbr_df_d12['mean_TPM_d2']
+    colors = np.array([cmap(data_norm(value)) if value <= vmax else [1, 1, 0, 1] for value in tpm_values])
+
+    # Plot the scatter plot for all data points with the customized color array
+    scatter = ax.scatter(bbr_df_d12[TF + '_d1'], bbr_df_d12[TF + '_d2'],
+                         color=colors, s=3)
+
+    # Highlight and annotate the specific data point for the given TF
+    tf_data = bbr_df_d12.loc[bbr_df_d12['gene'] == TF]
+    if not tf_data.empty:
+        ax.text(tf_data[TF + '_d1'].values[0], tf_data[TF + '_d2'].values[0], TF, fontsize=9, c='red',fontweight='bold')
+
+    # Add x = 0 and y = 0 lines
+    ax.axhline(0, color='black', linestyle='--', linewidth=1)
+    ax.axvline(0, color='black', linestyle='--', linewidth=1)
+
+    # Add labels and color bar
+    ax.set_xlabel(TF + '_'+d1,fontsize=14)
+    ax.set_ylabel(TF + '_'+d2,fontsize=14)
+    # Set the font size for x-ticks and y-ticks
+    ax.tick_params(axis='both', which='major', labelsize=12) 
+
+    cbar = plt.colorbar(cm.ScalarMappable(norm=data_norm, cmap=cmap), ax=ax)
+    cbar.set_label('Mean TPM ('+d2+') (>'+str(vmax)+' as yellow)',fontsize=12)
+    cbar.ax.tick_params(labelsize=12)
+
+    plt.show()    
