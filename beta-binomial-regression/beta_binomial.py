@@ -335,8 +335,8 @@ def sgd_optimizer(cell_counts, a_NC, b_NC, maxiter=100, priorval=.075,
             # X is not already in numpy object format
             counts = cell_counts.X.A
 
-        print("Shape of cell_counts (n_vars):", cell_counts.n_vars)
-        print("Shape of means:", means.shape)
+        #print("Shape of cell_counts (n_vars):", cell_counts.n_vars)
+        #print("Shape of means:", means.shape)
 
         assert cell_counts.n_vars == means.shape[1]
 
